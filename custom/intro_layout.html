@@ -1,10 +1,11 @@
-{%- extends "basic/layout.html" %}
+{% extends meta.page_template|default('basic/page.html') %}
 
 {%- macro navBar() %}
 <div class="navbar inline-items">
 	<ul>
-		<li><a href="{{ pathto(master_doc) }}">FontParts</a></li>
-		<li><a href="{{ pathto('genindex.html', 1) }}">Index</a></li>
+		<li><a href="{{ pathto(master_doc) }}">home</a> </li>
+		<li><a href="{{ pathto('intro/download.html', 1) }}">download</a></li>
+		<li><a href="{{ pathto('genindex.html', 1) }}">index</a></li>
 	</ul>
 	{%- include "searchbox.html" %}
 </div>
@@ -25,26 +26,22 @@
 
 {% block document %}
 <div id="wrapper">
-{%- if pagename == "index" %}
-	{%- include "intro.html" %}
-{%- endif %}
-</div>
-<div id="wrapper" class="main">
-	<div id='sidebar' class='box sidebar'>
-	  {{ toc }}
-	  {% if prev %}
-	    <h3>Previous</h3>
-	    <ul>
-	      <li><a href="{{ prev.link|e }}">{{ prev.title }}</a></li>
-	    </ul>
-	  {% endif %}
-	  {% if next %}
-	    <h3>Next</h3>
-	    <ul>
-	      <li><a href="{{ next.link|e }}">{{ next.title }}</a></li>
-	    </ul>
-	  {% endif %}
-	</div>
+  <div id='sidebar' class='box sidebar'>
+    <h3>Table of Contents</h3>
+    {{ toc }}
+    {% if prev %}
+      <h3>previous</h3>
+      <ul>
+        <li><a href="{{ prev.link|e }}">{{ prev.title }}</a></li>
+      </ul>
+    {% endif %}
+    {% if next %}
+      <h3>Next</h3>
+      <ul>
+        <li><a href="{{ next.link|e }}">{{ next.title }}</a></li>
+      </ul>
+    {% endif %}
+  </div>
 	<div class="body" id="content" class='box content'>
 		{% block body %}
 		{% endblock %}
@@ -66,5 +63,4 @@
 	{%- endif %}
 	</p>
 </div>
-<a href="{{ pathto(master_doc) }}"><div id="home_button"></div></a>
 {%- endblock %}

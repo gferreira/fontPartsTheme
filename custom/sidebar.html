@@ -1,0 +1,16 @@
+<div id='sidebar' class='box sidebar'>
+  <h3>Table of Contents</h3>
+  {{ toc }}
+  {% if prev %}
+    <h3>previous</h3>
+    <ul>
+      <li><a href="{{ prev.link|e }}">{{ prev.title }}</a></li>
+    </ul>
+  {% endif %}
+  {% if next %}
+    <h3>Next</h3>
+    <ul>
+      <li><a href="{{ next.link|e }}">{{ next.title }}</a></li>
+    </ul>
+  {% endif %}
+</div>
