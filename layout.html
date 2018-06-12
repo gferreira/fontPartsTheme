@@ -3,9 +3,8 @@
 {%- macro navBar() %}
 <div class="navbar inline-items">
 	<ul>
-		<li><a href="{{ pathto(master_doc) }}">home</a> </li>
-		<li><a href="{{ pathto('intro/download.html', 1) }}">download</a></li>
-		<li><a href="{{ pathto('genindex.html', 1) }}">index</a></li>
+		<li><a href="{{ pathto(master_doc) }}">FontParts</a></li>
+		<li><a href="{{ pathto('genindex.html', 1) }}">Index</a></li>
 	</ul>
 	{%- include "searchbox.html" %}
 </div>
@@ -26,29 +25,32 @@
 
 {% block document %}
 <div id="wrapper">
-	<div class="body" id="content">
+{%- if pagename == "index" %}
+	{%- include "intro.html" %}
+{%- endif %}
+</div>
+<div id="wrapper" class="main">
+	<div id='sidebar' class='box sidebar'>
+	  {{ toc }}
+	  {% if prev %}
+	    <h3>Previous</h3>
+	    <ul>
+	      <li><a href="{{ prev.link|e }}">{{ prev.title }}</a></li>
+	    </ul>
+	  {% endif %}
+	  {% if next %}
+	    <h3>Next</h3>
+	    <ul>
+	      <li><a href="{{ next.link|e }}">{{ next.title }}</a></li>
+	    </ul>
+	  {% endif %}
+	</div>
+	<div class="body" id="content" class='box content'>
 		{% block body %}
 		{% endblock %}
 	</div>
 	{% block relbar2 %}{% endblock %}
 	{% block sidebar2 %}{% endblock %}
-	<div id='sidebar'>
-		<h3>table of contents</h3>
-		{{ toc }}
-		<hr/>
-		{% if prev %}
-			<h3>previous</h3>
-			<ul>
-				<li><a href="{{ prev.link|e }}">{{ prev.title }}</a></li>
-			</ul>
-		{% endif %}
-		{% if next %}
-			<h3>next</h3>
-			<ul>
-				<li><a href="{{ next.link|e }}">{{ next.title }}</a></li>
-			</ul>
-		{% endif %}
-	</div>
 </div>
 {% endblock %}
 
@@ -64,4 +66,5 @@
 	{%- endif %}
 	</p>
 </div>
+<a href="{{ pathto(master_doc) }}"><div id="home_button"></div></a>
 {%- endblock %}

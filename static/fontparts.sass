@@ -2,6 +2,8 @@
 // responsive layout based on:
 // http://codepen.io/johnstonian/pen/guhid
 
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro')
+
 /* ---------- resets etc ---------- */
 
 *, *:before, *:after
@@ -11,27 +13,25 @@
 
 /* ---------- variables ---------- */
 
-$monofont: 'Menlo', 'Andale Mono', 'Monaco', 'Consolas', 'Courier'
-$sansfont: Lucida Grande, Geneva, Arial, Verdana, sans-serif
+$monofont: 'Source Code Pro', 'Menlo', 'Andale Mono', 'Monaco', 'Consolas', 'Courier'
+$sansfont: 'Source Sans Pro', Lucida Grande, Geneva, Arial, Verdana, sans-serif
 $italicfont: Georgia, serif
 $padding: 1em
-$border: 1px solid #ccc // 1px solid #DDD
+$border: 3px solid black
+$green: #66DD00
 
 /* ---------- mixins ---------- */
 
-.shiftlink
-	a:hover
-		position: relative
-		top: +1px
-		left: +1px
 
 /* ---------- html ---------- */
 
 body
-	max-width: 68em
 	margin: 0 auto
 	font-family: $sansfont
-	line-height: 1.5em
+	font-size: 1.15em
+	line-height: 1.6em
+	position: relative
+	height: 100%
 
 pre, code, tt
 	font-family: $monofont
@@ -40,9 +40,16 @@ pre, code, tt
 	font-weight: normal
 	white-space: pre-wrap
 
+pre
+	background: whitesmoke
+
 a, a:active
 	text-decoration: none
 	font-style: normal
+	color: blue
+
+a:hover
+	color: $green
 
 hr
 	color: none
@@ -53,13 +60,11 @@ hr
 	margin: 2em 0
 
 ::selection
-	color: #F30
-	background-color: none
+	background-color: #D5D5D5
 
 /* ---------- custom ---------- */
 
 .navbar
-	@extend .shiftlink
 	list-style: none
 	margin-left: 0
 	margin-bottom: 0
@@ -71,6 +76,8 @@ hr
 	ul, li, #searchbox
 		display: inline-block
 		zoom: 1
+	#searchbox
+		font-family: $monofont
 
 .inline-items
 	margin-top: 0
@@ -90,32 +97,116 @@ hr
 		margin: 0 10px 15px 0
 
 .box
-	border: $border
 	padding: 0 1.25em
 
-#wrapper, #footer, #header
+#wrapper
 	position: relative
 	margin: $padding
+	padding: 0 $padding
 
-#content, #sidebar, #footer, #header
+.main
+	min-height: 100vh
+	position: relative
+	display: grid
+	grid-template-columns: 31% 62%
+	grid-gap: 3.5%
+	grid-template-areas: "header header" "sidebar content"
+
+#content, #sidebar, #footer, #footer p, #header, .navbar
 	@extend .box
 
+#header, #footer
+	position: relative
+	width: 100%
+	background: black
+	padding: 0 $padding * 2
+	font-family: $monofont
+	font-size: 0.75em
+	color: white
+	a
+		color: white
+	a:hover
+		color: $green
+		font-weight: bold
+
+#intro
+	margin-bottom: 2.5em
+	padding: $padding
+	text-align: center
+	border-bottom: $border
+	min-height: 75vh
+	h1
+		font-family: $monofont
+		font-size: 5.5em
+		margin: 1.5em 0 0.75em 0
+	p
+		max-width: 700px
+		margin: auto
+		margin-bottom: 3.5em
+	li
+		display: inline-block
+		list-style: none
+		margin: 2em 0.75em 3em 0
+	a.button
+		display: inline-block
+		font-family: $monofont
+		font-size: .9em
+		background: black
+		border-radius: 12px
+		padding: 8px 16px
+		color: white
+		&:hover
+			background: blue
+			color: white
+
+.button #download
+		margin-right: 2em
+
+#sidebar
+	position: relative
+	width: 100%
+	padding: 1.5em 0
+	font-size: 0.9em
+	font-family: $monofont
+
+	ul
+		margin: 0
+		padding: 0 0 0 1em
+		list-style: none
+	li
+		padding: 0
+		text-indent: -1em
+		&:before
+			content: '–'
+			margin-right: 0.5em
+	h3
+		margin-bottom: 0.5em
+
 #content
-	@extend .shiftlink
+	width: 100%
+	min-height: 100%
 	padding-bottom: 1em
 	margin-bottom: $padding
 	h1, h2, h3
-		color: #777
+		font-family: $monofont
+		color: black
 		line-height: 1.2em
+	h1
+		font-size: 2.25em
+		margin-top: 0.5em
 	h2
-		border-top: $border
-		margin-top: 1.5em
-		padding-top: 0.5em
+		font-size: 1.5em
+		margin-top: 1em
+		padding-top: 1em
+		font-size: 1.75em
 	ul, ol
-		margin-left: 1.35em
 		padding-left: 0
+		margin-left: 1em
+		text-indent: -1em
 	ul
-		list-style: square
+		list-style: none
+	ul.simple
+		text-indent: 0em
 	code
 		padding: 0 0.05em
 		white-space: pre-line
@@ -129,8 +220,6 @@ hr
 		border: none
 	tr
 		border: none
-		&:hover
-			background-color: #EEE
 		th, td
 			padding: 0.5em
 			border: solid 1px #DDD
@@ -156,34 +245,49 @@ hr
 	h6:hover > a.headerlink
 		visibility: visible
 
-#sidebar
-	padding-bottom: 1.25em
-	ul
-		margin: 0
-		padding: 0 0 0 1em
-		list-style: none
-	li
-		padding: 0
-		text-indent: -1em
-		&:before
-			content: '◦'
-			margin-right: 0.5em
-	h3
-		margin-bottom: 0.75em
-	hr
-		margin: 1.5em 0
+#designers, #developers
+	display: inline-block
+	vertical-align: top
+	width: 48%
+
+#developers
+	float: right
+
+#footer
+	position: absolute
+	bottom: -150px
+	width: 100%
+	padding-top: 0.75em
+	padding-bottom: 0.75em
+
+#home_button
+	position: fixed
+	bottom: 1em
+	right: 1em
+	z-index: 4
+	opacity: .15
+	background: black
+	padding: 20px
+	border-radius: 12px
+	color: white
+	transition: opacity .75s
+	&:hover
+		opacity: 1
 
 /* ---------- media queries ---------- */
 
 $sidebarWidth: 18.75em
 $contentWidth: $sidebarWidth + $padding
 
-@media screen and (min-width: 47.5em )
+@media screen and (max-width: 1000px )
+	display: block
+	.main
+		display: block
+	#designers, #developers
+		display: block
+		width: 100%
 	#content
 		margin-right: $contentWidth
 	#sidebar
-		width: $sidebarWidth
-		position: absolute
-		top: 0
-		right: 0
-		z-index: 3
+		display: block
+		width: 100%
